@@ -1,0 +1,58 @@
+body{
+    background-color: #DAF5FF;
+}
+
+h1{
+    color: white;
+    background-image: linear-gradient(to left, #159895, #879494);
+    font-size: 50px;
+    font-weight: 600;
+    background-clip: text;
+    font-style: italic;
+}
+
+
+h3{
+    color: white;
+    background-image: linear-gradient(to right, #159895, #879494);
+    font-size: 20px;
+    font-weight: 600;
+    background-clip: text;
+}
+
+hr{
+    height: 0px;
+    width: 50%;
+    background-color: white;
+    border-style: none;
+    border-top-style: dotted;
+    border-color: grey;
+    border-width: 5px;
+    align-items: center;
+}
+
+button{
+    color: black;
+    background-color: #159895;
+    box-shadow: aquamarine;
+
+}
+
+button:hover{
+    background-color: rgb(240, 219, 100);
+}
+
+img{
+    position: relative;
+    left: 40%;
+    width: 300px;
+    height: 100px;
+    
+}
+
+#transparent-cloud{
+    position: absolute;
+    bottom: 500px;
+}
+
+
