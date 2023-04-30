@@ -30,6 +30,14 @@ List<Student> theStudents = (List<Student>)request.getAttribute("STUDENTS_LIST")
   
       <div id="content">
       
+         <!-- Adding Add Students Button that will take to add-student-form -->
+         
+         <input type='button' 
+         value='Add Student' 
+         onclick="window.location.href='add-student-form.jsp';return false;" 
+         class='add-student-button'
+         />
+         
          <table width=100%>
          
            <tr>

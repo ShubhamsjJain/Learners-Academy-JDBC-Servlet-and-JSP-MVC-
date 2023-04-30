@@ -2,7 +2,7 @@ package com.simplilearn.web.jdbc;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+import java.util.*;
 
 import javax.annotation.Resource;
 import javax.servlet.RequestDispatcher;
@@ -48,19 +48,70 @@ public class StudentControllerServlet extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		//Building connection between servlet(controller) and JSP(view)
-		
-		//List the students in MVC fashion
-		
 		try {
 			
-			listStudents(request,response);   //Provided below
+			String theCommand = request.getParameter("command");   // taking command parameter having value ADD or UPDATE or DELETE
+			
+			// if theCommand is missing,default it to liststudents
+			
+			if(theCommand == null) {
+				theCommand = "LIST";
+			}
+			
+			switch(theCommand){
+				
+			
+		        case "LIST":
+					//List the students in MVC fashion
+					
+					listStudents(request,response);   //Provided below
+					break;
+					
+			    case "ADD":
+			
+			        //Add the students in MVC fashion 
+			    
+			        addStudents(request,response);    //Provided below
+			        break;
+			        
+			     default:
+			    	 
+			    	 listStudents(request,response);   //Provided below
+					 
+			
+			}
+			
+			
 			
 		} catch (Exception e) {
 						
 			e.printStackTrace();
 		}  
 	
+	}
+
+
+	private void addStudents(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		//Read student info from form data
+		
+		
+		String name = request.getParameter("name");
+		String e_mail = request.getParameter("e_mail");
+		String place = request.getParameter("place");
+		
+		//Create a new student object
+		
+		Student theStudent = new Student(name,e_mail,place);
+		
+		//Send this student object to studentDbUtil in order to insert it into database
+		
+		studentdbutil.addStudent(theStudent);
+		
+		//Send back to list-student page
+		
+		listStudents(request,response);
+		
 	}
 
 
@@ -74,7 +125,8 @@ public class StudentControllerServlet extends HttpServlet {
 		
 		request.setAttribute("STUDENTS_LIST", liststudents);
 		
-		// Send to JSP page (view) using Request dispatcher
+		// Send to JSP page (view) using Request dispatcher (Building connection between servlet(controller) and JSP(view))
+
 		
 		RequestDispatcher dispatcher = request.getRequestDispatcher("list-students.jsp"); //where to forward
 		dispatcher.forward(request, response); //what to forward
