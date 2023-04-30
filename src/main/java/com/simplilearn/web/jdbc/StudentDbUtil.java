@@ -4,6 +4,7 @@ package com.simplilearn.web.jdbc;
 import javax.sql.DataSource;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.*;
@@ -97,4 +98,51 @@ public class StudentDbUtil {
 		
 	}
 
+	public void addStudent(Student theStudent)throws Exception {
+		
+		Student student = theStudent;
+		
+		String name = student.getFullName();
+		String e_mail = student.geteMail();
+		String city = student.getCity();
+		
+		
+		Connection myConn =null;
+		PreparedStatement myStmt = null;
+		
+		
+		
+	try {
+		
+		//Step 1: Get a connection to the database
+
+			myConn = dataSource.getConnection();
+			
+		//Step 2: Create a SQL statement
+		
+			String q = "insert into students (name_full,e_mail,city) VALUES(?,?,?)";	
+			
+			myStmt = myConn.prepareStatement(q);
+			
+		//Step 3: Set the values
+			
+			
+			myStmt.setString(1, name );
+			myStmt.setString(2, e_mail );
+			myStmt.setString(3, city);
+			
+		//Step 4: Execute SQL Query			
+			
+			myStmt.executeUpdate(); // Insert some product into students table.
+						
+		}finally {
+			
+		// Step 4:  Close JDBC objects
+			
+			close(myConn,myStmt,null);  // close method defined below
+		}
+	
+}
+
+        
 }
