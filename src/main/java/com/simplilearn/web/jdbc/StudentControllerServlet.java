@@ -80,6 +80,13 @@ public class StudentControllerServlet extends HttpServlet {
 			    	
 			    	loadStudents(request,response);
 			    	break;
+			    	
+			    case "UPDATE":
+			    	
+			    	//Update the student in MVC fashion 
+			    	
+			    	updateStudent(request,response);
+			    	break;
 			        
 			     default:
 			    	 
@@ -95,6 +102,32 @@ public class StudentControllerServlet extends HttpServlet {
 			e.printStackTrace();
 		}  
 	
+	}
+
+
+	private void updateStudent(HttpServletRequest request, HttpServletResponse response)throws Exception {
+		
+		// Get the values from update form
+		
+		int studentId = Integer.parseInt(request.getParameter("studentId"));
+		String name = request.getParameter("name");
+		String e_mail = request.getParameter("e_mail");
+		String place = request.getParameter("place");
+		
+		//Put these values in student object
+		
+		Student updateStu = new Student(studentId,name,e_mail,place);
+		
+		//Send this student object to studentdbutil class from where it will be updated to database
+		
+		studentdbutil.updatestudent(updateStu);
+		
+		//Return to list page
+		
+		listStudents(request,response);
+		
+		
+		
 	}
 
 

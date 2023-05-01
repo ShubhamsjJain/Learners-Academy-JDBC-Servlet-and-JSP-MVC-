@@ -208,5 +208,53 @@ public class StudentDbUtil {
 		
 	}
 
+	public void updatestudent(Student theStudent) throws Exception{
+		
+		
+		Connection myConn =null;
+		PreparedStatement myStmt = null;
+		
+		
+		
+	try {
+		
+		Student studentupdation = theStudent;
+		
+		int id = studentupdation.getId();
+		String name = studentupdation.getFullName();
+		String e_mail = studentupdation.geteMail();
+		String city = studentupdation.getCity();
+		
+		//Step 1: Get a connection to the database
+
+			myConn = dataSource.getConnection();
+			
+		//Step 2: Create a SQL statement
+		
+			String q = "update students set name_full=?, e_mail=?, city=? where id = ?";	
+			
+			myStmt = myConn.prepareStatement(q);
+			
+		//Step 3: Set the values  
+			
+			
+			myStmt.setString(1, name );
+			myStmt.setString(2, e_mail );
+			myStmt.setString(3, city);
+			myStmt.setInt(4, id);
+			
+		//Step 4: Execute SQL Query			
+			
+			myStmt.execute(); // Insert some product into students table.
+						
+		}finally {
+			
+		// Step 4:  Close JDBC objects
+			
+			close(myConn,myStmt,null);  // close method defined below
+		}
+		
+	}
+
         
 }
