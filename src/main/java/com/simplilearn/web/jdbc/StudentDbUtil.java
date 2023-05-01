@@ -144,5 +144,69 @@ public class StudentDbUtil {
 	
 }
 
+	public Student loadstudent(int id)throws Exception {
+		
+		Connection myConn =null;
+		PreparedStatement myStmt = null;
+		ResultSet myRs = null;
+		
+		int Studentid = id;
+		
+		Student tempStudent= null;;
+		
+	try {
+		
+		//Step 1: Get a connection to the database
+
+			myConn = dataSource.getConnection();
+			
+		//Step 2: Create a SQL statement
+		
+			String q = "select*from students where id =?";
+			                                                
+			myStmt = myConn.prepareStatement(q);
+			
+		//Step 3: Set values	
+			
+			myStmt.setInt(1, Studentid);
+			
+		//Step 4: Execute SQL Query
+		
+			myRs = myStmt.executeQuery();
+			
+		//Step 5: Process the result set
+			
+
+			if(myRs.next()) {
+				
+			             //Retrieve data from ResultSet row
+				
+				String name_full = myRs.getString("name_full");
+				String e_mail    = myRs.getString("e_mail");
+				String city      = myRs.getString("city");
+				
+			             //Create new student object
+			
+				tempStudent = new Student(Studentid,name_full,e_mail,city);
+				
+				
+			}else{
+				 
+				throw new Exception("Couldn't find studentid: "+ Studentid);
+			}
+			return tempStudent;
+			
+			
+		}finally {
+			
+			// Step 6: close JDBC objects
+			
+			close(myConn,myStmt,myRs);  // close method defined below
+		}
+	
+
+		
+	}
+
         
 }

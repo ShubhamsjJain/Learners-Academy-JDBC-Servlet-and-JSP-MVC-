@@ -74,6 +74,13 @@ public class StudentControllerServlet extends HttpServlet {
 			        addStudents(request,response);    //Provided below
 			        break;
 			        
+			    case "LOAD":
+			    	
+			    	//Load all student info from database based on student id got from list-student.jsp
+			    	
+			    	loadStudents(request,response);
+			    	break;
+			        
 			     default:
 			    	 
 			    	 listStudents(request,response);   //Provided below
@@ -88,6 +95,29 @@ public class StudentControllerServlet extends HttpServlet {
 			e.printStackTrace();
 		}  
 	
+	}
+
+
+	private void loadStudents(HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		
+		//Take student id from url linked to update button
+		
+		int id = Integer.parseInt(request.getParameter("studentId"));  //converting string into int
+		
+		//Send it to studentDbUtil in order to get student info from database
+		
+		Student theStudent = studentdbutil.loadstudent(id);
+		
+		//Place student in the request attribute
+		
+		request.setAttribute("STUDENT_LOAD", theStudent);
+		
+		//send it to update-student-form.jsp
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("/update-student-form.jsp");
+		dispatcher.forward(request, response);
+		
 	}
 
 
