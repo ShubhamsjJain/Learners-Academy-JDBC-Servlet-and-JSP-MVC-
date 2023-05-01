@@ -87,6 +87,13 @@ public class StudentControllerServlet extends HttpServlet {
 			    	
 			    	updateStudent(request,response);
 			    	break;
+			    	
+                case "DELETE":
+			    	
+			    	//Delete the student in MVC fashion 
+			    	
+			    	deleteStudent(request,response);
+			    	break;
 			        
 			     default:
 			    	 
@@ -102,6 +109,23 @@ public class StudentControllerServlet extends HttpServlet {
 			e.printStackTrace();
 		}  
 	
+	}
+
+
+	private void deleteStudent(HttpServletRequest request, HttpServletResponse response)throws Exception{
+		
+		//Get student Id from url linked to delete button
+		
+		int id = Integer.parseInt(request.getParameter("studentId"));
+		
+		//Send this id to studentdbutil class which will further send it to database to delete student
+		
+		studentdbutil.deletestudent(id);
+		
+		//Go back to list page
+		
+		listStudents(request,response);
+		
 	}
 
 

@@ -6,19 +6,20 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Student tracking</title>
+<title>List Teachers</title>
 <link  type="text/css" rel="stylesheet" href="css/style.css">
 </head>
 
-<%
+<% 
 
 //Get the students from the request object (sent by the servlet)
 
-List<Student> theStudents = (List<Student>)request.getAttribute("STUDENTS_LIST");
+List<Teacher> listteachers = (List<Teacher>)request.getAttribute("TEACHER_LIST");
 %>
+
 <body>
 
-  <div id="wrapper">
+<div id="wrapper">
 
      <div id="header">
           <h2>Learners Academy</h2>
@@ -30,51 +31,51 @@ List<Student> theStudents = (List<Student>)request.getAttribute("STUDENTS_LIST")
   
       <div id="content">
       
-         <!-- Adding Add Students Button that will take to add-student-form -->
+         <!-- Adding Add Teacher Button that will take to add-teacher-form -->
          
          <input type='button' 
-         value='Add Student' 
-         onclick="window.location.href='add-student-form.jsp';return false;" 
+         value='Add Teacher' 
+         onclick="window.location.href='add-teacher-form.jsp';return false;" 
          class='add-student-button'
          />
+         
          
          <table width=100%>
          
            <tr>
            
-              <th>Student ID</th>
-              <th>Student Name</th>
-              <th>Student E-Mail</th>
-              <th>Student City</th>
+              <th>Teacher ID</th>
+              <th>Teacher Name</th>
+              <th>Teacher E-Mail</th>
+              <th>Teacher City</th>
               <th>Action</th>
               
            </tr>
            
-           <% for(Student temp : theStudents){%>
-           
-           
+           <% for(Teacher teacher : listteachers) {%>
+	 
             
            <tr>
-             <td><%= temp.getId()%></td>
-             <td><%= temp.getFullName()%></td>
-             <td><%= temp.geteMail()%></td>
-             <td><%= temp.getCity()%></td>
-             <td><input type='button' 
+             <td><%= teacher.getId()%></td>
+             <td><%= teacher.getFullName()%></td>
+             <td><%= teacher.geteMail()%></td>
+             <td><%= teacher.getCity()%></td>
+              <td><input type='button' 
                         value='Update' 
-                        onclick="window.location.href='students?command=LOAD&studentId=<%=temp.getId()%>';return false;" 
+                        onclick="window.location.href='teachers?command=LOAD&teacherId=<%= teacher.getId()%>';return false;" 
                         class='add-student-button'
                  />
+             
                  
                  <!-- Delete button with javascript to prompt user to confirm whether they want to delete -->
                  
                  <a type="button"
                     class="add-student-button"
-                    href="students?command=DELETE&studentId=<%=temp.getId()%>"
+                    href="teachers?command=DELETE&teacherId=<%= teacher.getId()%>"
                     onclick="if(!(confirm('Are you sure you want to delete?')))return false"
                     >Delete</a>
                  
-                 
-             </td>
+             
            </tr>
            
            <% }%>
@@ -84,6 +85,7 @@ List<Student> theStudents = (List<Student>)request.getAttribute("STUDENTS_LIST")
       </div>
   
   </div>
+
 
 </body>
 </html>
