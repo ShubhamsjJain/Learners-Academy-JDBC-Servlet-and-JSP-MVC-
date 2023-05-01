@@ -1,26 +1,27 @@
 package com.simplilearn.web.jdbc;
 
-
-import javax.sql.DataSource;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
-import java.util.*;
-public class StudentDbUtil {
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.sql.DataSource;
+
+public class TeacherDbUtil {
 	
-	private DataSource dataSource;
+private DataSource dataSource;
 	
-	public StudentDbUtil(DataSource theDataSource) {
+	public TeacherDbUtil(DataSource theDataSource) {
 		dataSource = theDataSource;
 	}
 	
-	public List<Student> getStudents()throws Exception{
+	public List<Teacher> getTeachers()throws Exception{
 		
-		//Create an ArrayList of students
+		//Create an ArrayList of teachers
 		
-		List<Student> students = new ArrayList<>();
+		List<Teacher> teachers = new ArrayList<>();
 		
 				Connection myConn =null;
 				Statement myStmt = null;
@@ -35,7 +36,7 @@ public class StudentDbUtil {
 					
 				//Step 2: Create a SQL statement
 				
-					String q = "select*from students";
+					String q = "select*from teachers";
 					                                                
 					myStmt = myConn.createStatement();
 					
@@ -52,20 +53,20 @@ public class StudentDbUtil {
 					             //Retrieve data from ResultSet row
 						
 						int id = myRs.getInt("id");
-						String name_full = myRs.getString("name_full");
+						String name = myRs.getString("name");
 						String e_mail = myRs.getString("e_mail");
 						String city = myRs.getString("city");
 						
 					             //Create new student object
 					
-						Student tempStudent = new Student(id,name_full,e_mail,city);
+						Teacher tempTeacher = new Teacher(id,name,e_mail,city);
 						
 					             //add it to the list of students
 					
-						students.add(tempStudent);  //putting object of Student class in ArrayList
+						teachers.add(tempTeacher);  //putting object of Student class in ArrayList
 					}
 					
-					return students;
+					return teachers;
 					
 				}finally {
 					
@@ -98,13 +99,13 @@ public class StudentDbUtil {
 		
 	}
 
-	public void addStudent(Student theStudent)throws Exception {
+	public void addTeacher(Teacher theTeacher)throws Exception {
 		
-		Student student = theStudent;
+        Teacher teacher = theTeacher;
 		
-		String name = student.getFullName();
-		String e_mail = student.geteMail();
-		String city = student.getCity();
+		String name = teacher.getFullName();
+		String e_mail = teacher.geteMail();
+		String city = teacher.getCity();
 		
 		
 		Connection myConn =null;
@@ -120,7 +121,7 @@ public class StudentDbUtil {
 			
 		//Step 2: Create a SQL statement
 		
-			String q = "insert into students (name_full,e_mail,city) VALUES(?,?,?)";	
+			String q = "insert into teachers (name,e_mail,city) VALUES(?,?,?)";	
 			
 			myStmt = myConn.prepareStatement(q);
 			
@@ -141,18 +142,18 @@ public class StudentDbUtil {
 			
 			close(myConn,myStmt,null);  // close method defined below
 		}
-	
-}
+		
+	}
 
-	public Student loadstudent(int id)throws Exception {
+	public Teacher loadteacher(int id) throws Exception {
 		
 		Connection myConn =null;
 		PreparedStatement myStmt = null;
 		ResultSet myRs = null;
 		
-		int Studentid = id;
+		int Teacherid = id;
 		
-		Student tempStudent= null;;
+		Teacher tempTeacher= null;;
 		
 	try {
 		
@@ -162,13 +163,13 @@ public class StudentDbUtil {
 			
 		//Step 2: Create a SQL statement
 		
-			String q = "select*from students where id =?";
+			String q = "select*from teachers where id =?";
 			                                                
 			myStmt = myConn.prepareStatement(q);
 			
 		//Step 3: Set values	
 			
-			myStmt.setInt(1, Studentid);
+			myStmt.setInt(1, Teacherid);
 			
 		//Step 4: Execute SQL Query
 		
@@ -181,20 +182,20 @@ public class StudentDbUtil {
 				
 			             //Retrieve data from ResultSet row
 				
-				String name_full = myRs.getString("name_full");
+				String name_full = myRs.getString("name");
 				String e_mail    = myRs.getString("e_mail");
 				String city      = myRs.getString("city");
 				
 			             //Create new student object
 			
-				tempStudent = new Student(Studentid,name_full,e_mail,city);
+				tempTeacher = new Teacher(Teacherid,name_full,e_mail,city);
 				
 				
 			}else{
 				 
-				throw new Exception("Couldn't find studentid: "+ Studentid);
+				throw new Exception("Couldn't find teacherid: "+ Teacherid);
 			}
-			return tempStudent;
+			return tempTeacher;
 			
 			
 		}finally {
@@ -203,13 +204,10 @@ public class StudentDbUtil {
 			
 			close(myConn,myStmt,myRs);  // close method defined below
 		}
-	
-
 		
 	}
 
-	public void updatestudent(Student theStudent) throws Exception{
-		
+	public void updateteacher(Teacher updatetea)throws Exception {
 		
 		Connection myConn =null;
 		PreparedStatement myStmt = null;
@@ -218,12 +216,12 @@ public class StudentDbUtil {
 		
 	try {
 		
-		Student studentupdation = theStudent;
+		Teacher teacherupdation = updatetea;
 		
-		int id = studentupdation.getId();
-		String name = studentupdation.getFullName();
-		String e_mail = studentupdation.geteMail();
-		String city = studentupdation.getCity();
+		int id = teacherupdation.getId();
+		String name = teacherupdation.getFullName();
+		String e_mail = teacherupdation.geteMail();
+		String city = teacherupdation.getCity();
 		
 		//Step 1: Get a connection to the database
 
@@ -231,7 +229,7 @@ public class StudentDbUtil {
 			
 		//Step 2: Create a SQL statement
 		
-			String q = "update students set name_full=?, e_mail=?, city=? where id = ?";	
+			String q = "update teachers set name=?, e_mail=?, city=? where id = ?";	
 			
 			myStmt = myConn.prepareStatement(q);
 			
@@ -256,9 +254,9 @@ public class StudentDbUtil {
 		
 	}
 
-	public void deletestudent(int id)throws Exception {
+	public void deleteteacher(int id)throws Exception {
 		
-		int stuId = id;
+        int teaId = id;
 		
 		Connection myConn =null;
 		PreparedStatement myStmt = null;
@@ -274,13 +272,13 @@ public class StudentDbUtil {
 			
 		//Step 2: Create a SQL statement
 		
-			String q = "delete from students where id = ?";	
+			String q = "delete from teachers where id = ?";	
 			
 			myStmt = myConn.prepareStatement(q);
 			
 		//Step 3: Set the values  
 			
-			myStmt.setInt(1, stuId);
+			myStmt.setInt(1, teaId);
 			
 		//Step 4: Execute SQL Query			
 			
@@ -293,8 +291,6 @@ public class StudentDbUtil {
 			close(myConn,myStmt,null);  // close method defined below
 		}
 		
-		
 	}
 
-        
 }
