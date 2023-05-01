@@ -46,17 +46,25 @@ List<Student> theStudents = (List<Student>)request.getAttribute("STUDENTS_LIST")
               <th>Student Name</th>
               <th>Student E-Mail</th>
               <th>Student City</th>
+              <th>Action</th>
               
            </tr>
            
            <% for(Student temp : theStudents){%>
            
            
+            
            <tr>
              <td><%= temp.getId()%></td>
              <td><%= temp.getFullName()%></td>
              <td><%= temp.geteMail()%></td>
              <td><%= temp.getCity()%></td>
+             <td><input type='button' 
+                        value='Update' 
+                        onclick="window.location.href='students?command=LOAD&studentId=<%=temp.getId()%>';return false;" 
+                        class='add-student-button'
+                 />
+             </td>
            </tr>
            
            <% }%>
