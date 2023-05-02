@@ -41,4 +41,23 @@
   <url-pattern>/teachers</url-pattern>
   </servlet-mapping>
   
+  <servlet>
+  <servlet-name>ClassControllerServlet</servlet-name>
+  <servlet-class>com.simplilearn.web.jdbc.ClassControllerServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  <servlet-name>ClassControllerServlet</servlet-name>
+  <url-pattern>/classes</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  <servlet-name>SubjectControllerServlet</servlet-name>
+  <servlet-class>com.simplilearn.web.jdbc.SubjectControllerServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  <servlet-name>SubjectControllerServlet</servlet-name>
+  <url-pattern>/subjects</url-pattern>
+  </servlet-mapping>
 </web-app>
